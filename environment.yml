@@ -1,0 +1,11 @@
+name: festim-v2-review-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - festim==2.0a3
+  - matplotlib=3.8.3
+  - scipy==1.12.0
+  - paraview=5.11.2=*_egl
+  - pip:
+    - meshio[all]==5.3.5
