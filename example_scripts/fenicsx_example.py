@@ -23,6 +23,7 @@ my_mesh = mesh.create_mesh(MPI.COMM_WORLD, cells, mesh_points, domain)
 vdim = my_mesh.topology.dim
 fdim = vdim - 1
 
+# define function space and measures
 element_CG = basix.ufl.element(
     basix.ElementFamily.P,
     my_mesh.basix_cell(),
@@ -48,7 +49,6 @@ mesh_entities = mesh.locate_entities(
 )
 markers[mesh_entities] = 1
 mesh_tags_volumes = mesh.meshtags(my_mesh, vdim, cells, markers)
-
 num_facets = my_mesh.topology.index_map(fdim).size_local
 mesh_facet_indices = np.arange(num_facets, dtype=np.int32)
 tags_facets = np.full(num_facets, 0, dtype=np.int32)
@@ -59,26 +59,19 @@ indices_right = mesh.locate_entities_boundary(
 )
 tags_facets[indices_right] = 2
 mesh_tags_facets = mesh.meshtags(my_mesh, fdim, mesh_facet_indices, tags_facets)
-
 dx = ufl.Measure("dx", domain=my_mesh, subdomain_data=mesh_tags_volumes)
 
-# define species
+# define solutions
 u = fem.Function(V)
 u_n = fem.Function(V)
 v = ufl.TestFunction(V)
-
 mobile, trapped = ufl.split(u)
 mobile_n, trapped_n = ufl.split(u_n)
 mobile_test, trapped_test = ufl.TestFunctions(V)
-
 mobile_sub_function_space = V.sub(0)
 trapped_sub_function_space = V.sub(1)
 mobile_sub_function = u.sub(0)
 trapped_sub_function = u.sub(1)
-
-# define temperature
-temperature = 500
-k_B = 8.6173303e-5
 
 # define boundary conditions
 left_facets = mesh_tags_facets.find(1)
@@ -98,13 +91,14 @@ bc_right = fem.dirichletbc(
 bcs = [bc_left, bc_right]
 
 # define variational formulation
+temperature = 500
+k_B = 8.6173303e-5
 D = 1.90e-7 * ufl.exp(-0.2 / k_B / temperature)
 dt = 1 / 10
 final_time = 20
 k = 3.8e-17 * ufl.exp(-0.2 / k_B / temperature)
 p = 1e13 * ufl.exp(-1.2 / k_B / temperature)
 n_traps = 1e19
-
 F = ufl.dot(D * ufl.grad(mobile), ufl.grad(mobile_test)) * dx(1)
 F += ((mobile - mobile_n) / dt) * mobile_test * dx(1)
 F += ((trapped - trapped_n) / dt) * trapped_test * dx(1)
@@ -122,8 +116,6 @@ ksp.setType("preonly")
 ksp.getPC().setType("lu")
 ksp.getPC().setFactorSolverType("mumps")
 ksp.setErrorIfNotConverged(True)
-
-# intialise exports
 writer_mobile = VTXWriter(
     MPI.COMM_WORLD,
     "results/fenicsx_mobile.bp",
@@ -136,8 +128,6 @@ writer_trapped = VTXWriter(
     [trapped_sub_function],
     "BP5",
 )
-
-# solve problem
 t = 0
 progress = tqdm.autonotebook.tqdm(
     desc="Solving H transport problem", total=final_time, unit_scale=True
