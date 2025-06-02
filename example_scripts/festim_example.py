@@ -3,9 +3,11 @@ import festim as F
 
 my_model = F.HydrogenTransportProblem()
 
+# define geometry
 vertices = np.linspace(0, 3e-04, num=1000)
 my_model.mesh = F.Mesh1D(vertices)
 
+# define subdomains
 my_mat = F.Material(D_0=1.9e-7, E_D=0.2, name="my_mat")
 my_subdomain = F.VolumeSubdomain1D(id=1, borders=[0, 3e-04], material=my_mat)
 left_surface = F.SurfaceSubdomain1D(id=1, x=0)
@@ -16,11 +18,13 @@ my_model.subdomains = [
     right_surface,
 ]
 
+# define species
 mobile_H = F.Species("H")
 trapped_H = F.Species("trapped_H", mobile=False)
 empty_trap = F.ImplicitSpecies(n=1e19, others=[trapped_H], name="empty_trap")
 my_model.species = [mobile_H, trapped_H]
 
+# define traps
 my_model.reactions = [
     F.Reaction(
         p_0=1e13,
@@ -35,6 +39,7 @@ my_model.reactions = [
 
 my_model.temperature = 500.0
 
+# define boundary conditions
 my_model.boundary_conditions = [
     F.DirichletBC(subdomain=right_surface, value=0, species="H"),
     F.DirichletBC(subdomain=left_surface, value=1e12, species=mobile_H),
@@ -45,6 +50,7 @@ my_model.exports = [
     F.VTXSpeciesExport("results/festim_trapped.bp", field=trapped_H),
 ]
 
+# define solver
 my_model.settings = F.Settings(
     atol=1e-10,
     rtol=1e-10,
