@@ -6,9 +6,10 @@ import numpy as np
 from pathlib import Path
 from dolfinx import fem
 import zipfile
+from dolfinx.io import VTXWriter
 
 
-def read_velocity_field():
+def read_velocity_field(export_field: bool = False):
     zip_path = Path("data/cavity.zip")
     extract_path = Path("data/cavity")
 
@@ -24,6 +25,13 @@ def read_velocity_field():
     # Read the velocity field from the OpenFOAM reader
     ldc_reader = OpenFOAMReader(filename="data/cavity/cavity/cavity.foam", cell_type=12)
     velocity_field = ldc_reader.create_dolfinx_function(t=2.5, name="U")
+
+    if export_field:
+        # Export the velocity field to a VTX file
+        writer = VTXWriter(
+            MPI.COMM_WORLD, "results/velocity_field.bp", velocity_field, "BP5"
+        )
+        writer.write(t=0)
 
     return velocity_field
 
@@ -120,6 +128,6 @@ if __name__ == "__main__":
     Run the test case.
     """
     # Generate the mesh every time
-    velocity_field = read_velocity_field()
+    velocity_field = read_velocity_field(export_field=True)
 
     test_case(velocity_field=velocity_field)
