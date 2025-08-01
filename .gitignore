@@ -178,3 +178,6 @@ cython_debug/
 
 # vscode settings
 .vscode/
+
+# openfoam data
+coupling/coupling_cfd/data/cavity/
