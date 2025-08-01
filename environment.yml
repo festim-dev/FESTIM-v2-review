@@ -3,9 +3,12 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - festim==2.0a4
+  - festim==2.0a7
+  - openmc==0.15.2
+  - python-gmsh
   - pip
   - pip:
     - git+https://github.com/festim-dev/foam2dolfinx
     - git+https://github.com/festim-dev/openmc2dolfinx
+    - openmc_data_downloader==0.6.1
 
