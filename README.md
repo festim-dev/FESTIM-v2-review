@@ -52,7 +52,7 @@ The `v&v` folder contains scripts for verifying the accuracy of FESTIM using the
 
 **Note**: OpenFOAM isn't included in this conda environment. In order to run the OpenFOAM scripts, refer to [OpenFOAM's installation instructions](https://www.openfoam.com/download/openfoam-installation-on-linux).
 
-**Note**: OpenMC isn't included in this conda environment. In order to run the OpenMC scripts, refer to [OpenMC's installation instructions](https://docs.openmc.org/en/stable/quickinstall.html).
+
 ## Contact
 
 For any questions or issues, please contact remidm@mit.edu.
