@@ -123,7 +123,9 @@ def festim_model(use_openmc_mesh=True):
         source_term = dolfinx.fem.Function(V)
         F.helpers.nmm_interpolate(source_term, original_source_term)
         # export to VTX
-        writer = dolfinx.io.VTXWriter(MPI.COMM_WORLD, "source.bp", [source_term], "BP5")
+        writer = dolfinx.io.VTXWriter(
+            MPI.COMM_WORLD, "results/source.bp", [source_term], "BP5"
+        )
         writer.write(0.0)
 
     my_model.sources = [
@@ -144,7 +146,9 @@ def festim_model(use_openmc_mesh=True):
         transient=False,
     )
 
-    my_model.exports = [F.VTXSpeciesExport(filename="tritium_conc.bp", field=tritium)]
+    my_model.exports = [
+        F.VTXSpeciesExport(filename="results/tritium_conc.bp", field=tritium)
+    ]
 
     my_model.initialise()
     my_model.run()
