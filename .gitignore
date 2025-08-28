@@ -181,3 +181,9 @@ cython_debug/
 
 # openfoam data
 coupling/coupling_cfd/data/cavity/
+
+# files for openmc case
+*.xml
+*.h5
+*.vtk
+*.out
