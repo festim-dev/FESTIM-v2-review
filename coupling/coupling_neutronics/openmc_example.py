@@ -2,16 +2,18 @@ import openmc
 import openmc_data_downloader as odd
 from openmc2dolfinx import StructuredGridReader
 import festim as F
-import numpy as np
 import dolfinx
 from mpi4py import MPI
 
-dim = 60
+dim = 60.0
 
 
 def run_openmc_example():
+    """
+    Run a simple OpenMC simulation of a cube of lithium irradiated by a 14.1 MeV neutron source.
+    The output is a VTK file with the tritium production rate in each voxel of the mesh.
+    """
     # Materials
-
     lithium = openmc.Material(name="lithium")
     lithium.set_density("g/cc", 0.534)
     lithium.add_element("Li", 1.0)
@@ -26,7 +28,6 @@ def run_openmc_example():
     )
 
     # Geometry
-
     cube_surface = openmc.model.RectangularParallelepiped(
         -dim, dim, -dim, dim, -dim, dim
     )
@@ -54,7 +55,6 @@ def run_openmc_example():
     tallies = openmc.Tallies([tally])
 
     # Settings
-
     source = openmc.IndependentSource()
     source_pos_z = dim + 10
     source.space = openmc.stats.Point((0, 0, source_pos_z))
