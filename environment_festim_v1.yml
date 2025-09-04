@@ -1,0 +1,6 @@
+name: festim-v1-review-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - festim==1.4
