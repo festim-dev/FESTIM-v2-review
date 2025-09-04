@@ -7,8 +7,8 @@ import numpy as np
 from dolfinx.log import set_log_level, LogLevel
 
 # set_log_level(LogLevel.INFO)
-mesh_size = 100
-N = 5
+mesh_size = 50
+N = 10
 print("running penalty cases...")
 times = []
 for i in range(N):
@@ -52,6 +52,6 @@ data = np.array(
         ["Discontinuous Nietsches", f"{avg_time_3:.2f}"],
     ]
 )
-fname = "performance_comparison_v2.csv"
+fname = "results/performance_comparison_v2.csv"
 np.savetxt(fname, data, delimiter=",", fmt="%s")
 print(f"Results saved to {fname}")

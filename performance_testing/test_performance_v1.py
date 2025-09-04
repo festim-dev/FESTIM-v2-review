@@ -4,9 +4,9 @@ import numpy as np
 
 times = []
 
-for i in range(5):
+for i in range(10):
     start_time = time.time()
-    festim_sim_v1_COV(n=100)
+    festim_sim_v1_COV(n=50)
     end_time = time.time()
     times.append(end_time - start_time)
 
