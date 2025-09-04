@@ -79,7 +79,7 @@ ax.annotate(
 ax.text(
     v1_pos[0],
     v1_cov_data + max(v2_cov_data, v2_pen_data, v2_niet_data) * 0.02,
-    f"{v1_cov_data:.1f}s",
+    f"{v1_cov_data:.1f}",
     ha="center",
     va="bottom",
 )
@@ -88,7 +88,7 @@ for pos, val in zip(v2_pos, [v2_cov_data, v2_pen_data, v2_niet_data]):
     ax.text(
         pos,
         val + max(v2_cov_data, v2_pen_data, v2_niet_data) * 0.02,
-        f"{val:.1f}s",
+        f"{val:.1f}",
         ha="center",
         va="bottom",
     )
