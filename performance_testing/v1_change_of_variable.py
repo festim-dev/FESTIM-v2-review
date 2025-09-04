@@ -107,9 +107,11 @@ def festim_sim_v1_COV(n):
     my_model.settings = F.Settings(
         absolute_tolerance=1e-10,
         relative_tolerance=1e-10,
-        transient=False,
+        transient=True,
         chemical_pot=True,
+        final_time=200,
     )
+    my_model.dt = 0.1
 
     my_model.initialise()
     my_model.run()

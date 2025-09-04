@@ -2,12 +2,9 @@ import time
 from v1_change_of_variable import festim_sim_v1_COV
 import numpy as np
 
-mesh_sizes = np.geomspace(10, 1000, num=4, dtype=int)
-print(mesh_sizes)
-exit()
 times = []
 
-for i in range(10):
+for i in range(5):
     start_time = time.time()
     festim_sim_v1_COV(n=100)
     end_time = time.time()
@@ -15,4 +12,15 @@ for i in range(10):
 
 times = times[1:]
 avg_time = np.mean(times)
-print(f"Average simulation time: {avg_time:.3f} s")
+print(f"Average time Change of Variable: {avg_time:.3f} s")
+
+# save to a csv file
+data = np.array(
+    [
+        ["Method", "Average Time (s)"],
+        ["Change of Variable", f"{avg_time:.2f}"],
+    ]
+)
+fname = "results/performance_comparison_v1.csv"
+np.savetxt(fname, data, delimiter=",", fmt="%s")
+print(f"Results saved to {fname}")

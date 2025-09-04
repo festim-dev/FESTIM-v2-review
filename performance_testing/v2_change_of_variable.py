@@ -94,7 +94,10 @@ def festim_sim_v2_COV(n):
 
     my_model.temperature = 500.0
 
-    my_model.settings = F.Settings(atol=1e-10, rtol=1e-10, transient=False)
+    my_model.settings = F.Settings(
+        atol=1e-10, rtol=1e-10, transient=True, final_time=200
+    )
+    my_model.settings.stepsize = 0.1
 
     my_model.exports = [
         F.VTXSpeciesExport(filename="results/change_of_variable.bp", field=H),
