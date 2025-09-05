@@ -40,7 +40,9 @@ v2_bars = ax.bar(
 )
 
 # Customize the plot
-ax.set_ylabel("Average simulation runtime (s)")
+# Remove y-label and y-ticks for cleaner look
+ax.set_ylabel("")
+ax.set_yticks([])
 
 # Set x-axis labels for each bar
 all_positions = v1_pos + v2_pos
@@ -79,7 +81,7 @@ ax.annotate(
 ax.text(
     v1_pos[0],
     v1_cov_data + max(v2_cov_data, v2_pen_data, v2_niet_data) * 0.02,
-    f"{v1_cov_data:.1f}",
+    f"{v1_cov_data:.1f} s",
     ha="center",
     va="bottom",
 )
@@ -88,19 +90,20 @@ for pos, val in zip(v2_pos, [v2_cov_data, v2_pen_data, v2_niet_data]):
     ax.text(
         pos,
         val + max(v2_cov_data, v2_pen_data, v2_niet_data) * 0.02,
-        f"{val:.1f}",
+        f"{val:.1f} s",
         ha="center",
         va="bottom",
     )
 
-# Remove top and right spines
+# Remove top, right, and left spines
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
+ax.spines["left"].set_visible(False)
 
 # Adjust layout and save
 plt.tight_layout()
 plt.savefig(
-    "results/performance_comparison_bar_chart.png", dpi=300, bbox_inches="tight"
+    "results/performance_comparison_bar_chart.pdf", dpi=300, bbox_inches="tight"
 )
-print("Bar chart saved as 'results/performance_comparison_bar_chart.png'")
+# print("Bar chart saved as 'results/performance_comparison_bar_chart.png'")
 # plt.show()  # Commented out to avoid display issues
