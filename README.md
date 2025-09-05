@@ -57,18 +57,18 @@ The test case runs a transient simulation on a 500×500 mesh to benchmark differ
 >To run all the scripts in the [Performance testing](#performance-testing) section, a conda environment for festim v1.4 is also required, which can be created by:
 >
 >```bash
->conda env create -f environment_festim_v2.yml
+>conda env create -f environment_festim_v1.yml
 >```
 >
 >Then activate it the same way as done previously.
 
-Running the performance tests for festim v1 int he conda environemnt (`festim-v1-review-env`):
+Running the performance tests for festim v1 int the conda environemnt (`festim-v1-review-env`):
 
 ```bash 
 python test_performance_v1.py
 ```
 
-Running the performance tests for festim v2 int he conda environemnt (`festim-v2-review-env`):
+Running the performance tests for festim v2 int the conda environemnt (`festim-v2-review-env`):
 
 ```bash 
 python test_performance_v2.py
@@ -81,19 +81,22 @@ python plot_runtimes.py
 
 ## Multi-physics coupling
 
-The `coupling` folder includes scripts which demonstrate how external solvers such as OpenFOAM and OpenMC can be coupled with FESTIM.
+The `coupling` folder includes scripts demonstrating how external solvers such as OpenFOAM and OpenMC can be coupled with FESTIM.
+These examples showcase hydrogen transport in complex multiphysics scenarios including advection-diffusion with fluid flow ([OpenFOAM](https://www.openfoam.com/)) and neutron-induced tritium production and transport ([OpenMC](https://openmc.org/)).
 
 ### OpenFOAM
 
-Scripts in the `coupling_cfd` subfolder are used for coupling FESTIM simulations with OpenFOAM.
+Scripts in the `coupling_cfd` subfolder demonstrate coupling FESTIM simulations with OpenFOAM for modeling hydrogen transport in flowing fluids. 
+The example simulates hydrogen diffusion in a lid-driven cavity flow, comparing standard diffusion with advection-enhanced transport.
 
 >[!NOTE]
->OpenFOAM isn't included in this conda environment. In order to re-run the OpenFOAM scripts, refer to [OpenFOAM's installation instructions](https://www.openfoam.com/download/openfoam-installation-on-linux).
+>OpenFOAM results are pre-computed and stored in the repository as a zip file, so OpenFOAM installation is not required to run the FESTIM coupling scripts. 
+>However, if you wish to re-run the OpenFOAM case, refer to [OpenFOAM's installation instructions](https://www.openfoam.com/download/openfoam-installation-on-linux).
 
 
 ### OpenMC
 
-Scripts in the `coupling_neutronics` subfolder are used for coupling FESTIM simulations with OpenMC.
+Scripts in the `coupling_neutronics` subfolder demonstrate coupling FESTIM simulations with OpenMC for modeling neutron-induced tritium production and subsequent hydrogen isotope transport. The example simulates tritium breeding in lithium and its diffusion through structural materials in a fusion reactor environment.
 
 
 ## Contact
