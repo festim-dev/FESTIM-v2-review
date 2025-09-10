@@ -48,8 +48,8 @@ ax.set_yticks([])
 all_positions = v1_pos + v2_pos
 all_labels = ["Change of\nVariable"] + [
     "Change of\nVariable",
-    "Discontinuous\nPenalty",
-    "Discontinuous\nNietsches",
+    "Penalty\n method",
+    "Nietsche\n method",
 ]
 ax.set_xticks(all_positions)
 ax.set_xticklabels(all_labels, fontsize=9)
