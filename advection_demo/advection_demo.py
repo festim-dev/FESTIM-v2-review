@@ -152,16 +152,6 @@ def export_initial_condition():
 
 
 if __name__ == "__main__":
-    # model = build_festim_model(
-    #     D_value=1e-02,
-    #     results_filename="results/test",
-    #     with_velocity_field=True,
-    # )
-
-    # model.initialise()
-
-    # model.run()
-
     export_initial_condition()
 
     test_case()
