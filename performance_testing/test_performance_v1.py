@@ -4,9 +4,11 @@ import numpy as np
 
 times = []
 
-for i in range(10):
+mesh_size = 300
+N = 10
+for i in range(N):
     start_time = time.time()
-    festim_sim_v1_COV(n=50)
+    festim_sim_v1_COV(n=mesh_size)
     end_time = time.time()
     times.append(end_time - start_time)
 

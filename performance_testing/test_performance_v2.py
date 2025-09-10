@@ -7,7 +7,7 @@ import numpy as np
 from dolfinx.log import set_log_level, LogLevel
 
 # set_log_level(LogLevel.INFO)
-mesh_size = 50
+mesh_size = 300
 N = 10
 print("running penalty cases...")
 times = []
