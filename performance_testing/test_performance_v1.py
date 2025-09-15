@@ -5,9 +5,9 @@ import numpy as np
 times = []
 
 for i in range(10):
-    start_time = time.time()
+    start_time = time.perf_counter()
     festim_sim_v1_COV(n=50)
-    end_time = time.time()
+    end_time = time.perf_counter()
     times.append(end_time - start_time)
 
 times = times[1:]

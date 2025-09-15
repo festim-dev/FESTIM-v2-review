@@ -1,14 +1,16 @@
 import numpy as np
 import matplotlib
-
+from pathlib import Path
 matplotlib.use("Agg")  # Use non-interactive backend
 import matplotlib.pyplot as plt
 
+folder = Path("results")
+
 v1_data = np.genfromtxt(
-    "results/performance_comparison_v1.csv", delimiter=",", names=True
+    folder/"performance_comparison_v1.csv", delimiter=",", names=True
 )
 v2_data = np.genfromtxt(
-    "results/performance_comparison_v2.csv", delimiter=",", names=True
+    folder/"performance_comparison_v2.csv", delimiter=",", names=True
 )
 
 v1_cov_data = float(v1_data["Average_Time_s"])
@@ -16,7 +18,7 @@ v1_cov_data = float(v1_data["Average_Time_s"])
 # Access v2 data by index since we know the order from the CSV
 v2_cov_data = float(v2_data["Average_Time_s"][0])  # Change of Variable
 v2_pen_data = float(v2_data["Average_Time_s"][1])  # Discontinuous Penalty
-v2_niet_data = float(v2_data["Average_Time_s"][2])  # Discontinuous Nietsches
+v2_niet_data = float(v2_data["Average_Time_s"][2])  # Discontinuous Nitsches
 
 # Create bar chart with two groups: v1 (single bar) and v2 (three bars)
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -47,7 +49,7 @@ all_positions = v1_pos + v2_pos
 all_labels = ["Change of\nVariable"] + [
     "Change of\nVariable",
     "Discontinuous\nPenalty",
-    "Discontinuous\nNietsches",
+    "Discontinuous\nNitsches",
 ]
 ax.set_xticks(all_positions)
 ax.set_xticklabels(all_labels, fontsize=9)
