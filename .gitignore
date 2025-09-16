@@ -187,3 +187,7 @@ coupling/coupling_cfd/data/cavity/
 *.h5
 *.vtk
 *.out
+
+# ignore results data
+*.csv
+*.pdf
