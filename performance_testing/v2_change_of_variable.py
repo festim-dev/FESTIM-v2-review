@@ -1,11 +1,13 @@
+from mpi4py import MPI
+
 import festim as F
 import numpy as np
 import dolfinx
 import ufl
-from mpi4py import MPI
-
+from time import perf_counter
 
 def festim_sim_v2_COV(n):
+    start = perf_counter()
     # Create the mesh
     fenics_mesh = dolfinx.mesh.create_unit_square(MPI.COMM_WORLD, n, n)
 
@@ -100,8 +102,13 @@ def festim_sim_v2_COV(n):
     my_model.settings.stepsize = 0.1
 
     my_model.exports = [
-        F.VTXSpeciesExport(filename="results/change_of_variable.bp", field=H),
+        # F.VTXSpeciesExport(filename="results/change_of_variable.bp", field=H),
     ]
 
     my_model.initialise()
+    end = perf_counter()
+    print(f"Setup time Change of Variable: {end - start:.2e} seconds")
+    start = perf_counter()
     my_model.run()
+    end = perf_counter()
+    print(f"Solve time Change of Variable: {end - start:.2e} seconds")

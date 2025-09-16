@@ -5,11 +5,13 @@ import numpy as np
 times = []
 
 mesh_size = 300
-N = 10
-for i in range(N):
-    start_time = time.time()
+
+
+for i in range(10):
+    start_time = time.perf_counter()
     festim_sim_v1_COV(n=mesh_size)
-    end_time = time.time()
+    end_time = time.perf_counter()
+
     times.append(end_time - start_time)
 
 times = times[1:]

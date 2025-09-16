@@ -1,11 +1,13 @@
+from mpi4py import MPI
+
 import festim as F
 import numpy as np
 import dolfinx
 import ufl
-from mpi4py import MPI
-
+from time import perf_counter
 
 def festim_sim_v2_disc_pen(n):
+    start = perf_counter()
     # Create the mesh
     fenics_mesh = dolfinx.mesh.create_unit_square(MPI.COMM_WORLD, n, n)
 
@@ -113,13 +115,18 @@ def festim_sim_v2_disc_pen(n):
     my_model.settings.stepsize = 0.1
 
     my_model.exports = [
-        F.VTXSpeciesExport(
-            filename="results/disc_penalty_l.bp", field=H, subdomain=left_volume
-        ),
-        F.VTXSpeciesExport(
-            filename="results/disc_penalty_r.bp", field=H, subdomain=right_volume
-        ),
+        # F.VTXSpeciesExport(
+        #     filename="results/disc_penalty_l.bp", field=H, subdomain=left_volume
+        # ),
+        # F.VTXSpeciesExport(
+        #     filename="results/disc_penalty_r.bp", field=H, subdomain=right_volume
+        # ),
     ]
 
     my_model.initialise()
+    end = perf_counter()
+    print(f"Setup time Discontinuous Penalty: {end - start:.2e} seconds")
+    start = perf_counter()
     my_model.run()
+    end = perf_counter()
+    print(f"Solve time Discontinuous Penalty: {end - start:.2e} seconds")
