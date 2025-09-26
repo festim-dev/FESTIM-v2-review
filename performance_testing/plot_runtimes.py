@@ -1,16 +1,17 @@
 import numpy as np
 import matplotlib
 from pathlib import Path
+
 matplotlib.use("Agg")  # Use non-interactive backend
 import matplotlib.pyplot as plt
 
 folder = Path("results")
 
 v1_data = np.genfromtxt(
-    folder/"performance_comparison_v1.csv", delimiter=",", names=True
+    folder / "performance_comparison_v1.csv", delimiter=",", names=True
 )
 v2_data = np.genfromtxt(
-    folder/"performance_comparison_v2.csv", delimiter=",", names=True
+    folder / "performance_comparison_v2.csv", delimiter=",", names=True
 )
 
 v1_cov_data = float(v1_data["Average_Time_s"])
@@ -50,9 +51,8 @@ ax.set_yticks([])
 all_positions = v1_pos + v2_pos
 all_labels = ["Change of\nVariable"] + [
     "Change of\nVariable",
-    "Discontinuous\nPenalty",
-    "Discontinuous\nNitsches",
-
+    "Penalty",
+    "Nitsches",
 ]
 ax.set_xticks(all_positions)
 ax.set_xticklabels(all_labels, fontsize=9)
@@ -72,7 +72,7 @@ ax.annotate(
 ax.annotate(
     "FESTIM v2",
     xy=(2.8, max(v2_cov_data, v2_pen_data, v2_niet_data) * 1.5),
-    xytext=(2.8, max(v2_cov_data, v2_pen_data, v2_niet_data) * 1.5),
+    xytext=(2.8, max(v2_cov_data, v2_pen_data, v2_niet_data) * 2),
     ha="center",
     va="center",
     fontsize=12,
