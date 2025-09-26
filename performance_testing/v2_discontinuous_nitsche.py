@@ -6,6 +6,7 @@ import dolfinx
 import ufl
 from time import perf_counter
 
+
 def festim_sim_v2_disc_nitsche(n):
     start = perf_counter()
     # Create the mesh
@@ -109,18 +110,21 @@ def festim_sim_v2_disc_nitsche(n):
     my_model.temperature = 500.0
 
     my_model.settings = F.Settings(
-        atol=1e-10, rtol=1e-10, transient=True, final_time=200
+        atol=1e-10,
+        rtol=1e-10,
+        transient=True,
+        final_time=200,
     )
     my_model.settings.stepsize = 0.1
 
-    my_model.exports = [
-        # F.VTXSpeciesExport(
-        #     filename="results/disc_nitsche_l.bp", field=H, subdomain=left_volume
-        # ),
-        # F.VTXSpeciesExport(
-        #     filename="results/disc_nitsche_r.bp", field=H, subdomain=right_volume
-        # ), 
-    ]
+    # my_model.exports = [
+    #     F.VTXSpeciesExport(
+    #         filename="results/disc_nitsche_l.bp", field=H, subdomain=left_volume
+    #     ),
+    #     F.VTXSpeciesExport(
+    #         filename="results/disc_nitsche_r.bp", field=H, subdomain=right_volume
+    #     ),
+    # ]
 
     my_model.initialise()
     end = perf_counter()
